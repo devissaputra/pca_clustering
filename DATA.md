@@ -1,8 +1,11 @@
 # Data
 
-**Dataset:** UCI Wine Recognition dataset via scikit-learn  
-**Reference page:** https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html
+This project uses the UCI Wine Recognition dataset distributed through scikit-learn.
 
-This project uses a real public dataset distributed through the relevant scientific Python dataset loader. The experiment does not replace missing source data with randomly generated observations.
+- 178 samples
+- 13 numerical chemical measurements
+- known class labels are available, but they are not used to fit PCA or K-means
 
-For reproducibility, the code loads the dataset programmatically and records the sample size in `results/metrics.json` where applicable. Consult the source page for the original dataset description, citation, and usage terms.
+Source documentation: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html
+
+The experiment loads the data with `load_wine`. No local copy is required.
