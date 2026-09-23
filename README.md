@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/devissaputra/pca_clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/devissaputra/pca_clustering/actions/workflows/ci.yml)
 
+
+**Category:** AI Engineering
 ![Project overview](assets/01_cover.svg)
 
 An unsupervised-learning study that separates **model selection** from **visualization**: K-means is evaluated in the full standardized feature space, while PCA is used only to create an interpretable two-dimensional view.
