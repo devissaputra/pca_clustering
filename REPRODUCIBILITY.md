@@ -1,6 +1,4 @@
-# Reproducing the Experiment
-
-Run:
+# Reproducing the experiment
 
 ```bash
 python -m venv .venv
@@ -9,10 +7,21 @@ pip install -r requirements.txt
 python src/run_experiment.py
 ```
 
-The script loads the wine dataset from scikit-learn, standardizes all 13 features, fits a two-component PCA model, and tests K-means with k from 2 through 6.
+Seed 42 is used for every K-means fit. Candidate cluster counts are 2 through 6.
 
-K-means uses `n_init=30` and `random_state=42`.
+Crucially, silhouette-based model selection is performed in the full 13-feature standardized space. PCA is fitted separately for a two-dimensional visualization. The known wine labels are used only afterward for Adjusted Rand Index and never for fitting or selecting `k`.
 
-The selected k, silhouette score, explained-variance values, and sample count are written to `results/metrics.json`.
+Outputs:
 
-Package-version changes can affect small numerical details, so note your scikit-learn version when comparing runs.
+- `results/metrics.json`
+- `results/figures/pca_clusters.png`
+- `results/figures/silhouette_by_k.png`
+
+Tests:
+
+```bash
+pip install pytest
+pytest
+```
+
+GitHub Actions runs the tests automatically.

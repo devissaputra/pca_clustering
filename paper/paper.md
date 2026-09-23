@@ -1,46 +1,21 @@
 # PCA and K-Means Clustering
 
-## Question
+## Abstract
 
-Can a simple unsupervised pipeline reveal meaningful structure in real wine-chemistry measurements without using the known class labels?
-
-## Data
-
-I use the UCI Wine Recognition dataset through scikit-learn. It contains 178 samples and 13 numerical chemical measurements.
-
-The supplied class labels are not used to fit PCA or K-means.
+This experiment evaluates whether the 13 standardized chemical measurements in the Wine Recognition dataset contain unsupervised cluster structure. K-means model selection is performed in the full standardized feature space. A two-component PCA projection is used only for visualization. Known wine-class labels are withheld until after model selection, when Adjusted Rand Index is calculated as an external interpretation measure.
 
 ## Method
 
-I standardize the 13 features, reduce the data to two principal components, and fit K-means for `k = 2` through `k = 6`.
-
-For each value of `k`, I calculate the silhouette score. K-means uses `n_init=30` and `random_state=42`.
+K-means is evaluated for k = 2 through 6 with 30 initializations and seed 42. The selected k maximizes silhouette score in the full 13-dimensional standardized space.
 
 ## Results
 
-The first two principal components explain:
-
-- PC1: 36.20%;
-- PC2: 19.21%;
-- combined: about 55.4%.
-
-The strongest tested clustering used `k = 3` with a silhouette score of 0.5611.
+The selected solution has k = 3 and a full-space silhouette score of 0.2849. When the same cluster labels are viewed in the 2D PCA projection, the silhouette score is 0.5583. The first two components explain 55.41% of variance. Post-hoc ARI against the known classes is 0.8975.
 
 ## Interpretation
 
-A three-cluster solution is reasonably well separated in the two-dimensional PCA representation.
-
-That does not mean the clusters are automatically equivalent to the known wine classes. The method is unsupervised, so the cluster structure should be interpreted on its own first.
+The stronger silhouette in the 2D projection shows why a visualization should not automatically become the modeling space. The high ARI indicates strong correspondence with known classes, but those labels did not influence clustering or k selection.
 
 ## Limitations
 
-Only two principal components are used for clustering, so some information from the original 13 features is discarded. K-means also assumes roughly compact, Euclidean clusters.
-
-A useful extension would test cluster stability, compare other dimensionality-reduction methods, and only then compare discovered clusters with the known labels as an external check.
-
-## Reproduce
-
-```bash
-pip install -r requirements.txt
-python src/run_experiment.py
-```
+K-means assumes Euclidean, approximately spherical clusters. A stronger study would examine clustering stability, Gaussian mixtures, density-based methods, alternative embeddings, and resampling.

@@ -1,65 +1,64 @@
 # PCA and K-Means Clustering
 
+[![CI](https://github.com/devissaputra/pca_clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/devissaputra/pca_clustering/actions/workflows/ci.yml)
+
 ![Project overview](assets/01_cover.svg)
 
-I built this project to practise unsupervised learning on a real dataset. The goal is to reduce a set of correlated chemical measurements to a simpler representation and then see whether clear groups appear without using the known class labels.
+An unsupervised-learning study that separates **model selection** from **visualization**: K-means is evaluated in the full standardized feature space, while PCA is used only to create an interpretable two-dimensional view.
 
-The experiment uses the UCI Wine Recognition data distributed with scikit-learn.
+## Question
+
+> Do the 13 chemical measurements in the Wine Recognition dataset contain stable cluster structure without using the known wine-class labels?
 
 ## Data
 
-The dataset contains:
+- 178 wine samples
+- 13 numerical chemical measurements
+- 3 known classes, withheld during clustering
 
-- 178 wine samples;
-- 13 numerical chemical measurements.
+The known labels are not used to fit PCA, K-means, or choose the number of clusters.
 
-I do not use the wine class labels when fitting PCA or K-means.
-
-More detail is in [DATA.md](DATA.md).
-
-## How the experiment works
+## Method
 
 ![Processing pipeline](assets/02_data_pipeline.svg)
 
-The workflow is straightforward:
-
 1. standardize all 13 features;
-2. reduce the data to two principal components;
-3. fit K-means for `k = 2` through `k = 6`;
-4. calculate the silhouette score for each value of `k`;
-5. select the best internal clustering result.
+2. fit K-means for `k = 2 ... 6` in the **full 13-dimensional standardized space**;
+3. select `k` using silhouette score;
+4. fit a 2-component PCA projection only for visualization;
+5. after model selection is complete, compare cluster assignments with known classes using Adjusted Rand Index (ARI) as a post-hoc interpretation.
 
-I use `n_init=30` and `random_state=42` for K-means.
+This avoids choosing clusters solely because they look separated in a two-dimensional projection.
 
-## Two-dimensional representation
+## PCA view
 
 ![PCA representation](assets/03_data_or_model.svg)
 
 The first two principal components explain:
 
-- PC1: 36.20% of the variance;
-- PC2: 19.21%;
-- combined: about 55.4%.
+- PC1: 36.20%
+- PC2: 19.21%
+- combined: 55.41%
 
-This view is useful for seeing structure, but it is still a compressed version of the original 13-dimensional data.
+The projection is useful for seeing structure, but it does not replace the full feature space.
 
-## Results
+## Recorded results
 
 ![Cluster evaluation](assets/04_evaluation_or_results.svg)
 
-The best tested solution was:
-
 | Item | Result |
 |---|---:|
-| Selected number of clusters | 3 |
-| Silhouette score | 0.5611 |
+| Selected `k` | **3** |
+| Silhouette, full 13D space | **0.2849** |
+| Silhouette of same labels in 2D PCA view | 0.5583 |
+| Post-hoc ARI vs known classes | **0.8975** |
 | Samples | 178 |
 
-A silhouette score around 0.56 suggests reasonably separated groups in this two-dimensional PCA space.
+The large difference between the 13D and 2D silhouette scores is itself instructive: a low-dimensional projection can make separation look cleaner than it is in the original standardized space.
 
-Because this is an unsupervised experiment, I do not use the original labels to choose the number of clusters. A useful follow-up would compare the discovered groups with the known classes only after clustering, as an external interpretation step.
+The high ARI is encouraging, but the true class labels were used only after clustering and never for model selection.
 
-## Run it
+## Run
 
 ```bash
 python -m venv .venv
@@ -68,10 +67,17 @@ pip install -r requirements.txt
 python src/run_experiment.py
 ```
 
-On Windows, use `.venv\Scripts\activate`.
+Generated metrics and figures are saved under `results/`.
 
-## Repository notes
+## Test
 
-- [DATA.md](DATA.md) explains the data source.
-- [REPRODUCIBILITY.md](REPRODUCIBILITY.md) records the main settings.
-- [paper/paper.md](paper/paper.md) contains the longer write-up.
+```bash
+pip install pytest
+pytest
+```
+
+Tests verify that the full-space silhouette score drives model selection, the known labels are used only for post-hoc evaluation, and the experiment is deterministic.
+
+## Limits
+
+K-means assumes roughly spherical groups under Euclidean distance. PCA is linear. A stronger extension would compare Gaussian mixtures, density-based clustering, stability under resampling, more than two visualization components, and alternative internal validation criteria.
