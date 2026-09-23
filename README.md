@@ -78,6 +78,12 @@ pytest
 
 Tests verify that the full-space silhouette score drives model selection, the known labels are used only for post-hoc evaluation, and the experiment is deterministic.
 
-## Limits
+## What the projection can and cannot tell us
 
-K-means assumes roughly spherical groups under Euclidean distance. PCA is linear. A stronger extension would compare Gaussian mixtures, density-based clustering, stability under resampling, more than two visualization components, and alternative internal validation criteria.
+The two-dimensional PCA picture is useful because people can inspect it, but the clustering decision is made in the full standardized feature space. That distinction matters here: the silhouette score looks much cleaner after projection than it does in 13 dimensions.
+
+I would not treat the PCA plot as proof of three natural groups. K-means favors roughly spherical clusters under Euclidean distance, and PCA only captures linear directions of variance.
+
+## A useful next comparison
+
+A follow-up would compare Gaussian mixtures and density-based clustering, test cluster stability under resampling, and check whether the three-cluster result survives different scaling choices and internal validation criteria.
