@@ -1,7 +1,6 @@
 # Quick Description
 
-Discover latent structure in real chemical measurements using scaling, PCA, and K-means.
+I standardize real wine-chemistry measurements, reduce them to two principal components, and use K-means to look for groups without using the known class labels. Silhouette scores are used to compare values of k.
 
-**Difficulty:** ★★★  
-**Dataset:** UCI Wine Recognition dataset via scikit-learn  
-**Core skills:** PCA, clustering, silhouette analysis, unsupervised learning
+**Dataset:** UCI Wine Recognition  
+**Main ideas:** PCA, K-means, silhouette score, unsupervised learning
