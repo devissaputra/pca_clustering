@@ -1,13 +1,18 @@
-# Reproducibility
+# Reproducing the Experiment
 
-This repository uses a single executable entry point: `python src/run_experiment.py`.
+Run:
 
-## Reproduction checklist
-1. Create an isolated Python environment.
-2. Install `requirements.txt`.
-3. Acquire the dataset exactly as documented in `DATA.md`.
-4. Run the experiment from the repository root.
-5. Confirm generated artifacts under `results/` and `assets/`.
-6. Record the Python/package versions if using results in an application or manuscript.
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python src/run_experiment.py
+```
 
-Random seeds are fixed where the underlying library supports them. Data splits and target definitions are declared in code. No metric should be copied into academic material unless it was generated from the stated dataset and configuration.
+The script loads the wine dataset from scikit-learn, standardizes all 13 features, fits a two-component PCA model, and tests K-means with k from 2 through 6.
+
+K-means uses `n_init=30` and `random_state=42`.
+
+The selected k, silhouette score, explained-variance values, and sample count are written to `results/metrics.json`.
+
+Package-version changes can affect small numerical details, so note your scikit-learn version when comparing runs.
