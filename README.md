@@ -1,88 +1,77 @@
-# 04. PCA + Clustering ★★★
+# PCA and K-Means Clustering
 
-![Cover](assets/01_cover.svg)
+![Project overview](assets/01_cover.svg)
 
-> **Quick description:** Discover latent structure in real chemical measurements using scaling, principal component analysis, and K-means clustering.
+I built this project to practise unsupervised learning on a real dataset. The goal is to reduce a set of correlated chemical measurements to a simpler representation and then see whether clear groups appear without using the known class labels.
 
-## Why this project matters
-This AI Engineering project demonstrates a complete **unsupervised-learning** workflow on real data. The goal is not to predict a known label, but to compress correlated chemical measurements into a lower-dimensional representation and test whether meaningful cluster structure emerges.
+The experiment uses the UCI Wine Recognition data distributed with scikit-learn.
 
-The project uses the **UCI Wine Recognition dataset** via scikit-learn, standardizes all 13 numerical variables, projects the data with PCA, and evaluates candidate K-means solutions using silhouette analysis.
+## Data
 
-## Dataset
-- **Dataset:** UCI Wine Recognition
-- **Samples:** 178 wines
-- **Features:** 13 continuous chemical measurements
-- **Source:** scikit-learn `load_wine`
-- **Data provenance and usage:** [DATA.md](DATA.md)
+The dataset contains:
 
-## Research pipeline
-![PCA and clustering pipeline](assets/02_data_pipeline.svg)
+- 178 wine samples;
+- 13 numerical chemical measurements.
 
-### Processing steps
-1. Load the real wine-chemistry measurements.
-2. Standardize every feature to zero mean and unit variance.
-3. Fit PCA on the standardized feature matrix.
-4. Project observations into principal-component space.
-5. Fit K-means for candidate values of `k`.
-6. Select the strongest internal solution using the silhouette score.
+I do not use the wine class labels when fitting PCA or K-means.
 
-## Latent-space representation
-![Latent PCA space](assets/03_data_or_model.svg)
+More detail is in [DATA.md](DATA.md).
+
+## How the experiment works
+
+![Processing pipeline](assets/02_data_pipeline.svg)
+
+The workflow is straightforward:
+
+1. standardize all 13 features;
+2. reduce the data to two principal components;
+3. fit K-means for `k = 2` through `k = 6`;
+4. calculate the silhouette score for each value of `k`;
+5. select the best internal clustering result.
+
+I use `n_init=30` and `random_state=42` for K-means.
+
+## Two-dimensional representation
+
+![PCA representation](assets/03_data_or_model.svg)
 
 The first two principal components explain:
 
-- **PC1:** 36.20% of variance
-- **PC2:** 19.21% of variance
-- **Combined:** approximately 55.4%
+- PC1: 36.20% of the variance;
+- PC2: 19.21%;
+- combined: about 55.4%.
 
-This two-dimensional view is useful for interpretation, but the clustering result should be understood as an unsupervised geometric pattern rather than proof of a biological or categorical ground truth.
+This view is useful for seeing structure, but it is still a compressed version of the original 13-dimensional data.
 
-## Cluster evaluation
+## Results
+
 ![Cluster evaluation](assets/04_evaluation_or_results.svg)
 
-Generated metrics from the included experiment:
+The best tested solution was:
 
-```json
-{
-  "best_k": 3,
-  "silhouette": 0.5610505693103247,
-  "pc1_variance": 0.3619884809992633,
-  "pc2_variance": 0.19207490257008944,
-  "n": 178
-}
-```
+| Item | Result |
+|---|---:|
+| Selected number of clusters | 3 |
+| Silhouette score | 0.5611 |
+| Samples | 178 |
 
-### Interpretation
-- **k = 3** gives the strongest tested silhouette score.
-- A silhouette score of **0.5611** indicates reasonably compact, separated clusters.
-- The first two PCs retain more than half of total standardized variance.
-- Class labels are not used to fit PCA or K-means, so the experiment remains unsupervised.
+A silhouette score around 0.56 suggests reasonably separated groups in this two-dimensional PCA space.
 
-## Reproduce
+Because this is an unsupervised experiment, I do not use the original labels to choose the number of clusters. A useful follow-up would compare the discovered groups with the known classes only after clustering, as an external interpretation step.
+
+## Run it
+
 ```bash
 python -m venv .venv
-source .venv/bin/activate   # Windows: .venv\Scripts\activate
+source .venv/bin/activate
 pip install -r requirements.txt
 python src/run_experiment.py
 ```
 
-Metrics are written to `results/metrics.json`.
+On Windows, use `.venv\Scripts\activate`.
 
-## Research documentation
-- [Scientific-style technical report](paper/paper.md)
-- [Quick description](QUICK_DESCRIPTION.md)
-- [Website-ready portfolio entry](PORTFOLIO.md)
-- [Data provenance](DATA.md)
-- [Reproducibility notes](REPRODUCIBILITY.md)
-- [Ethics and responsible use](ETHICS.md)
-- [Citation metadata](CITATION.cff)
+## Repository notes
 
-## Difficulty
-**★★★ — intermediate**
-
-## Academic integrity
-This repository is a research portfolio artifact, not a peer-reviewed publication. The reported metrics are generated by the included code on the stated real dataset.
-
-## Stronger research extension
-A publication-oriented extension would compare PCA with nonlinear embedding methods, test cluster stability across resampling, add bootstrap uncertainty for silhouette scores, evaluate sensitivity to scaling choices, and examine whether externally known wine classes align with the discovered clusters without using those labels during fitting.
+- [DATA.md](DATA.md) explains the data source.
+- [REPRODUCIBILITY.md](REPRODUCIBILITY.md) records the main settings.
+- [paper/paper.md](paper/paper.md) contains the longer write-up.
