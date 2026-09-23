@@ -1,21 +1,19 @@
-# Web Portfolio Card
+# Portfolio Summary
 
-## PCA + Clustering
+## PCA and K-Means Clustering
 
-**Track:** AI Engineering  
-**Difficulty:** ★★★  
-**Dataset:** UCI Wine Recognition dataset via scikit-learn  
-**Quick description:** Discover latent structure in real chemical measurements using scaling, PCA, and K-means.
+I use PCA and K-means to explore structure in real wine-chemistry measurements without using the known class labels during fitting.
 
-### Suggested website image gallery
+After standardization, the first two principal components retain about 55.4% of the variance. I compare k from 2 to 6 using the silhouette score.
 
-![Cover](assets/01_cover.svg)
+### Images
 
-![Data pipeline](assets/02_data_pipeline.svg)
+![Project overview](assets/01_cover.svg)
 
-![PCA latent space](assets/03_data_or_model.svg)
+![Processing pipeline](assets/02_data_pipeline.svg)
+
+![PCA representation](assets/03_data_or_model.svg)
 
 ![Cluster evaluation](assets/04_evaluation_or_results.svg)
 
-### Suggested portfolio copy
-This project explores unsupervised structure discovery in real wine-chemistry data. After standardization, PCA compresses 13 measurements into a lower-dimensional representation, while K-means and silhouette analysis identify a three-cluster solution. The repository includes executable code, real empirical metrics, reproducibility documentation, and a scientific-style technical report.
+**Key result:** k = 3 produced the best tested silhouette score, 0.5611.
