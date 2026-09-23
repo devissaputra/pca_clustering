@@ -1,30 +1,25 @@
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
-\usepackage{hyperref}
+\usepackage{booktabs}
 \title{PCA and K-Means Clustering}
 \author{Devis W. Saputra}
 \begin{document}
 \maketitle
 
 \begin{abstract}
-I use PCA and K-means to explore structure in the UCI Wine Recognition dataset without using the supplied class labels during fitting. A three-cluster solution gives the strongest tested silhouette score.
+This experiment evaluates K-means cluster structure in the full standardized 13-feature Wine Recognition space. PCA is used only for two-dimensional visualization, and known wine labels are reserved for post-hoc Adjusted Rand Index evaluation.
 \end{abstract}
 
-\section{Question}
-Can a simple unsupervised pipeline reveal clear structure in real wine-chemistry measurements?
-
-\section{Data and Method}
-The dataset contains 178 samples and 13 numerical features. I standardize the features, reduce them to two principal components, and test K-means with $k$ from 2 through 6.
+\section{Method}
+K-means is tested for $k=2$ through $6$ with 30 initializations and seed 42. The selected $k$ maximizes silhouette score in the original standardized feature space. A separate two-component PCA projection is used for visualization.
 
 \section{Results}
-PC1 explains 36.20\% of the variance and PC2 explains 19.21\%. The best tested solution is $k=3$ with a silhouette score of 0.5611.
+The selected solution is $k=3$. Full-space silhouette is 0.2849. The same cluster assignments appear more separated in the two-dimensional PCA view, with silhouette 0.5583. PC1 and PC2 explain 36.20\% and 19.21\% of variance. Post-hoc Adjusted Rand Index against the known classes is 0.8975.
+
+\section{Interpretation}
+The difference between full-space and projected silhouette scores illustrates why a visualization space should not automatically become the modeling space. The high ARI is descriptive only; known labels did not influence fitting or model selection.
 
 \section{Limitations}
-Clustering is performed in a two-dimensional PCA space, so information from the original feature space is discarded. K-means also favours compact Euclidean clusters.
+K-means assumes Euclidean compact clusters. Future work should compare clustering stability, Gaussian mixtures, density-based methods, and alternative validation criteria.
 
-\section{Reproduction}
-Install \texttt{requirements.txt} and run \texttt{python src/run\_experiment.py}.
-
-\bibliographystyle{plain}
-\bibliography{references}
 \end{document}

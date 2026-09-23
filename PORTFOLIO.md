@@ -1,19 +1,9 @@
-# Portfolio Summary
+# PCA and K-Means Clustering
 
-## PCA and K-Means Clustering
+**Focus:** unsupervised model selection without letting the visualization choose the model.
 
-I use PCA and K-means to explore structure in real wine-chemistry measurements without using the known class labels during fitting.
+K-means is fitted and evaluated in the full standardized 13-feature Wine Recognition space for k = 2 through 6. PCA is used only afterward to visualize the selected clusters in two dimensions.
 
-After standardization, the first two principal components retain about 55.4% of the variance. I compare k from 2 to 6 using the silhouette score.
+The selected solution is k = 3 with a full-space silhouette score of 0.2849. The same assignments look substantially cleaner in the 2D PCA projection, where the silhouette is 0.5583, which is a useful warning about over-interpreting visual separation. Known wine labels are withheld until a post-hoc ARI check of 0.8975.
 
-### Images
-
-![Project overview](assets/01_cover.svg)
-
-![Processing pipeline](assets/02_data_pipeline.svg)
-
-![PCA representation](assets/03_data_or_model.svg)
-
-![Cluster evaluation](assets/04_evaluation_or_results.svg)
-
-**Key result:** k = 3 produced the best tested silhouette score, 0.5611.
+The repository includes deterministic experiment code, behavioural tests, CI, reproducibility notes, and a technical report.

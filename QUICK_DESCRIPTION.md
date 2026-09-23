@@ -1,6 +1,5 @@
 # Quick Description
 
-I standardize real wine-chemistry measurements, reduce them to two principal components, and use K-means to look for groups without using the known class labels. Silhouette scores are used to compare values of k.
+An unsupervised-learning experiment that selects K-means clusters in the full 13-feature standardized Wine dataset and uses PCA only for visualization. Known class labels are withheld until a post-hoc Adjusted Rand Index check.
 
-**Dataset:** UCI Wine Recognition  
-**Main ideas:** PCA, K-means, silhouette score, unsupervised learning
+**Main ideas:** K-means, PCA, silhouette score, unsupervised validation, post-hoc ARI
