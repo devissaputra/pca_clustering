@@ -10,9 +10,9 @@
 <rect x="835" y="180" width="300" height="365" rx="24" fill="#fff" stroke="#cbd5e1" stroke-width="2"/>
 <text x="875" y="230" font-family="Arial" font-size="23" font-weight="700" fill="#0f172a">Selected solution</text>
 <text x="875" y="325" font-family="Arial" font-size="70" font-weight="700" fill="#166534">k = 3</text>
-<text x="875" y="405" font-family="Arial" font-size="54" font-weight="700" fill="#0f172a">0.5611</text>
-<text x="875" y="442" font-family="Arial" font-size="21" fill="#64748b">silhouette score</text>
+<text x="875" y="405" font-family="Arial" font-size="54" font-weight="700" fill="#0f172a">0.2849</text>
+<text x="875" y="442" font-family="Arial" font-size="21" fill="#64748b">full-space silhouette</text>
 <text x="875" y="505" font-family="Arial" font-size="19" fill="#475569">Higher means clusters are</text><text x="875" y="532" font-family="Arial" font-size="19" fill="#475569">more compact and separated.</text>
 <rect x="260" y="585" width="680" height="55" rx="16" fill="#ecfeff" stroke="#67e8f9" stroke-width="2"/>
-<text x="600" y="620" text-anchor="middle" font-family="Arial" font-size="19" font-weight="700" fill="#155e75">Labels are not used to fit PCA or K-means; evaluation remains unsupervised.</text>
+<text x="600" y="620" text-anchor="middle" font-family="Arial" font-size="19" font-weight="700" fill="#155e75">Labels are withheld during selection; ARI is reported only after clustering.</text>
 </svg>
