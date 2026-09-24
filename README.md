@@ -10,7 +10,7 @@ An unsupervised-learning study that separates **model selection** from **visuali
 
 ## Question
 
-> Do the 13 chemical measurements in the Wine Recognition dataset contain stable cluster structure without using the known wine-class labels?
+> Do the 13 chemical measurements in the Wine Recognition dataset contain cluster structure that K-means can recover under this standardized setup without using the known wine-class labels?
 
 ## Data
 
