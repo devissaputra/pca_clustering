@@ -1,5 +1,5 @@
-# Quick Description
+# PCA and K-Means Clustering
 
-An unsupervised-learning experiment that selects K-means clusters in the full 13-feature standardized Wine dataset and uses PCA only for visualization. Known class labels are withheld until a post-hoc Adjusted Rand Index check.
+This unsupervised study separates clustering from visualization. K-means is selected using silhouette scores in all 13 standardized wine features, while a two-component PCA projection provides an interpretable view. The selected three-cluster solution has full-space silhouette 0.2849 and post-hoc adjusted Rand index 0.8975 against known labels; the much larger projected silhouette is explicitly not used as evidence that the full-space clusters are equally well separated.
 
-**Main ideas:** K-means, PCA, silhouette score, unsupervised validation, post-hoc ARI
+See [CALCULATIONS.md](CALCULATIONS.md) for evidence and verification scope.

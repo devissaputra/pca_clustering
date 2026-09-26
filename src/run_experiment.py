@@ -1,3 +1,7 @@
+# Calculation reading guide: ../CALCULATIONS.md (repository root).
+# Silhouette(i) = (b(i)-a(i))/max(a(i),b(i)); PCA variance share = eigenvalue / total.
+# a is within-cluster mean distance; b is the closest alternative-cluster mean distance. The two-dimensional silhouette is not the selection score. ARI uses known labels only after clustering and does not validate unseen-sample performance.
+
 from __future__ import annotations
 
 import json

@@ -1,10 +1,26 @@
 # PCA and K-Means Clustering
 
+This unsupervised study separates clustering from visualization. K-means is selected using silhouette scores in all 13 standardized wine features, while a two-component PCA projection provides an interpretable view. The selected three-cluster solution has full-space silhouette 0.2849 and post-hoc adjusted Rand index 0.8975 against known labels; the much larger projected silhouette is explicitly not used as evidence that the full-space clusters are equally well separated.
+
+## Start here
+
+- [Calculations, evidence and verification scope](CALCULATIONS.md)
+- [Figure sources and exact numerical paths](docs/figure_spec.json)
+- [Working paper](paper/paper.md)
+- [Data and provenance](DATA.md)
+
+![Study question, data, design and interpretation](assets/review_overview.svg)
+
+![Defined calculation and source-linked evidence](assets/review_calculations.svg)
+
+**Review scope:** The existing suite requires unavailable dependencies; no full-suite pass is claimed. The complete data/model experiment was not rerun in this review.
+
+## Detailed project documentation
+
 [![CI](https://github.com/devissaputra/pca_clustering/actions/workflows/ci.yml/badge.svg)](https://github.com/devissaputra/pca_clustering/actions/workflows/ci.yml)
 
 
 **Category:** AI Engineering
-![Project overview](assets/01_cover.svg)
 
 An unsupervised-learning study that separates **model selection** from **visualization**: K-means is evaluated in the full standardized feature space, while PCA is used only to create an interpretable two-dimensional view.
 
@@ -22,7 +38,6 @@ The known labels are not used to fit PCA, K-means, or choose the number of clust
 
 ## Method
 
-![Processing pipeline](assets/02_data_pipeline.svg)
 
 1. standardize all 13 features;
 2. fit K-means for `k = 2 ... 6` in the **full 13-dimensional standardized space**;
@@ -34,7 +49,6 @@ This avoids choosing clusters solely because they look separated in a two-dimens
 
 ## PCA view
 
-![PCA representation](assets/03_data_or_model.svg)
 
 The first two principal components explain:
 
@@ -46,7 +60,6 @@ The projection is useful for seeing structure, but it does not replace the full 
 
 ## Recorded results
 
-![Cluster evaluation](assets/04_evaluation_or_results.svg)
 
 | Item | Result |
 |---|---:|
